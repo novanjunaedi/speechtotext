@@ -109,9 +109,19 @@ function App() {
     SpeechRecognition.stopListening();
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(transcript);
-    alert('Berhasil di salin ke Clipboard');
+  const copyToClipboard = (text) => {
+    const input = document.createElement('input');
+    input.setAttribute('value', text);
+    document.body.appendChild(input);
+    input.select();
+    input.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(input.value);
+    document.body.removeChild(input);
+
+    alert('Teks berhasil disalin ke clipboard');
+    return input.value;
   };
 
   return (
@@ -129,7 +139,7 @@ function App() {
                     <h5>Transkrip:</h5>
                   </div>
                   <div className="col-auto">
-                    <button type="button" onClick={copyToClipboard} className="btn btn-outline-secondary btn-sm" disabled={!transcript}>
+                    <button type="button" onClick={() => copyToClipboard(transcript)} className="btn btn-outline-secondary btn-sm" disabled={!transcript}>
                       <i className="fa-solid fa-clipboard me-2" />
                       Salin
                     </button>
