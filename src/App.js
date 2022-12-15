@@ -116,12 +116,11 @@ function App() {
     input.select();
     input.setSelectionRange(0, 99999); // For mobile devices
 
-    // Copy the text inside the text field
-    navigator.clipboard.writeText(input.value);
+    const result = document.execCommand('copy');
     document.body.removeChild(input);
 
     alert('Teks berhasil disalin ke clipboard');
-    return input.value;
+    return result;
   };
 
   return (
